@@ -2,14 +2,7 @@ from aoc_tool import get_input, submit
 import re
 from collections import defaultdict
 
-if __name__ == "__main__":
-    year, day = 2024, 5
-    aoc_input = get_input(year, day)
-    aoc_input = aoc_input.splitlines()
-
-    #file = 'day 5/input.txt'
-    #f=open(file,"r")
-    #aoc_input=f.read().splitlines()
+def getRulesUpdates(aoc_input):
     rules = defaultdict(list)
     updates = []
     found = False
@@ -20,6 +13,15 @@ if __name__ == "__main__":
             updates.append(x)
         else:
             rules[x.split('|')[0]].append(x.split('|')[1])
+    return rules, updates
+
+
+if __name__ == "__main__":
+    year, day = 2024, 5
+    aoc_input = get_input(year, day)
+    aoc_input = aoc_input.splitlines()
+
+    rules, updates = getRulesUpdates(aoc_input)
     sum = 0
     for u in updates:
         flag = False
@@ -29,10 +31,15 @@ if __name__ == "__main__":
             if len(set(afters) & set(u[:x])) > 0:
                 flag = True
                 break
-        if flag:
+        if not flag:
             sum+=int(u[len(u)//2])
 
     print(sum)
+
+
+    
+
+    
 
 
     
