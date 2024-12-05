@@ -3,23 +3,16 @@ import re
 from collections import defaultdict
 
 def getRulesUpdates(aoc_input):
-    rules = defaultdict(list)
-    updates = []
-    found = False
-    for x in aoc_input: 
-        if x == '':
-            found = True
-        elif found:
-            updates.append(x)
-        else:
-            rules[x.split('|')[0]].append(x.split('|')[1])
-    return rules, updates
+    rules, updates = aoc_input.split('\n\n')
+    rules_dict = defaultdict(list)
+    for r in rules.splitlines(): 
+        rules_dict[r.split('|')[0]].append(r.split('|')[1])
+    return rules_dict, updates.splitlines()
 
 
 if __name__ == "__main__":
     year, day = 2024, 5
     aoc_input = get_input(year, day)
-    aoc_input = aoc_input.splitlines()
 
     rules, updates = getRulesUpdates(aoc_input)
     sum = 0

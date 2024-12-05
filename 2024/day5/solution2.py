@@ -4,20 +4,12 @@ from collections import defaultdict
 
 
 def getRulesUpdates(aoc_input):
-    rules = defaultdict(list)
-    afterrules = defaultdict(list)
-    updates = []
-    found = False
-    for x in aoc_input: 
-        if x == '':
-            found = True
-        elif found:
-            updates.append(x)
-        else:
-            before, after = x.split('|')
-            afterrules[after].append(before)
-            rules[before].append(after)
-    return rules, afterrules, updates
+    rules, updates = aoc_input.split('\n\n')
+    rules_dict, afterrules = defaultdict(list), defaultdict(list)
+    for r in rules.splitlines(): 
+        rules_dict[r.split('|')[0]].append(r.split('|')[1])
+        afterrules[r.split('|')[1]].append(r.split('|')[0])
+    return rules_dict, afterrules, updates.splitlines()
 
 def getWrongUpdates(updates):
     wrongs = []
@@ -33,7 +25,6 @@ def getWrongUpdates(updates):
 if __name__ == "__main__":
     year, day = 2024, 5
     aoc_input = get_input(year, day)
-    aoc_input = aoc_input.splitlines()
 
     rules, afterrules, updates = getRulesUpdates(aoc_input)
     wrongs = getWrongUpdates(updates)
